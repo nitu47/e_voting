@@ -1,0 +1,37 @@
+{% extends 'voting_app/base.html' %}
+{% block content %}
+<h3>Results</h3>
+<p>Total Votes: <strong>{{ total_votes }}</strong></p>
+
+<table class="table">
+  <thead><tr><th>Candidate</th><th>Party</th><th>Votes</th></tr></thead>
+  <tbody>
+    {% for c in candidates %}
+      <tr><td>{{ c.name }}</td><td>{{ c.party }}</td><td>{{ c.votes }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div style="max-width:600px;">
+  <canvas id="resultChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('resultChart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: {{ names|safe }},
+      datasets: [{
+        label: 'Votes',
+        data: {{ votes|safe }},
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: { y: { beginAtZero: true, precision:0 } }
+    }
+  });
+</script>
+{% endblock %}

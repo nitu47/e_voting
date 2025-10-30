@@ -1,0 +1,26 @@
+{% extends 'voting_app/base.html' %}
+{% block content %}
+<h3>Vote</h3>
+<p>Hello, <strong>{{ voter.name }}</strong> — choose a candidate below:</p>
+
+{% if voter.has_voted %}
+  <div class="alert alert-info">You have already voted.</div>
+  <a class="btn btn-outline-primary" href="{% url 'voting_app:results' %}">View Results</a>
+{% else %}
+  <div class="row">
+    {% for c in candidates %}
+      <div class="col-md-4">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ c.name }}</h5>
+            <p class="card-text">{{ c.party }}</p>
+            <a href="{% url 'voting_app:vote_candidate' c.id %}" class="btn btn-primary">Vote</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No candidates available. Ask admin to add candidates via admin.</p>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock %}

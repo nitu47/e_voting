@@ -1,0 +1,10 @@
+{% extends 'voting_app/base.html' %}
+{% block content %}
+<h3>Verify OTP</h3>
+<p>We sent an OTP to <strong>{{ voter.email }}</strong>. Enter it below:</p>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Verify</button>
+</form>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'voting_app/base.html' %}
+{% block content %}
+<div class="text-center">
+  <h1>Welcome to E-Voting</h1>
+  <p class="lead">Secure local voting with OTP verification and result visualization.</p>
+  <a class="btn btn-primary me-2" href="{% url 'voting_app:register' %}">Register to Vote</a>
+  <a class="btn btn-outline-secondary" href="{% url 'voting_app:results' %}">View Results</a>
+</div>
+{% endblock %}
