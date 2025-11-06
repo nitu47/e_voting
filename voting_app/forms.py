@@ -12,3 +12,4 @@ class RegisterForm(forms.ModelForm):
 
 class OTPForm(forms.Form):
     otp = forms.CharField(max_length=6, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Enter OTP'}))
+    

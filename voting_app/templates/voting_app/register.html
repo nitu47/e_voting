@@ -1,9 +1,13 @@
 {% extends 'voting_app/base.html' %}
 {% block content %}
-<h3>Register & Request OTP</h3>
-<form method="post" class="mt-3">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-success">Send OTP</button>
+<h2>Register to Vote</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Send OTP</button>
 </form>
+
+{% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %}
 {% endblock %}

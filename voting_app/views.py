@@ -3,9 +3,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
-
 from .models import Voter, Candidate
 from .forms import RegisterForm, OTPForm
+from .models import Voter
 
 def generate_otp():
     return str(random.randint(100000, 999999))
@@ -125,3 +125,22 @@ def user_logout(request):
     request.session.flush()
     messages.info(request, 'Session cleared.')
     return redirect('voting_app:home')
+def vote_view(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+
+        # ✅ Check if voter already exists
+        if Voter.objects.filter(email=email).exists():
+            messages.error(request, "You have already voted!")
+            return redirect("vote_page")
+
+        # ✅ Save email once vote submitted
+        Voter.objects.create(email=email)
+
+        # ✅ Process vote (your existing vote logic)
+        # Example: candidate.votes += 1 and save()
+
+        messages.success(request, "Your vote has been recorded successfully!")
+        return redirect("vote_page")
+
+    return render(request, "vote.html")

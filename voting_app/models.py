@@ -18,3 +18,9 @@ class Candidate(models.Model):
 
     def __str__(self):
         return self.name
+'''class Voter(models.Model):
+    email = models.EmailField(unique=True)
+    voted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email'''
