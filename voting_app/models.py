@@ -1,6 +1,6 @@
 from django.db import models
 
-class Voter(models.Model):
+'''class Voter(models.Model):
     name = models.CharField(max_length=150)
     email = models.EmailField(unique=True)
     otp = models.CharField(max_length=6, blank=True, null=True)
@@ -9,7 +9,21 @@ class Voter(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} <{self.email}>"
+        return f"{self.name} <{self.email}>"'''
+
+
+class Voter(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField(unique=True)
+    otp = models.CharField(max_length=6, blank=True, null=True)
+    is_verified = models.BooleanField(default=False)
+    has_voted = models.BooleanField(default=False)
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    user_agent = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
 
 class Candidate(models.Model):
     name = models.CharField(max_length=150)
