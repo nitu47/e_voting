@@ -6,26 +6,23 @@ from django.contrib import messages
 from .models import Voter, Candidate
 from .forms import RegisterForm, OTPForm
 
-# -------------------
-# HELPER FUNCTIONS
-# -------------------
 
+# HELPER FUNCTIONS
 def generate_otp():
     """Generate a random 6-digit OTP"""
     return str(random.randint(100000, 999999))
 
 
-# -------------------
 # MAIN VIEWS
-# -------------------
+
 
 def home(request):
     return render(request, 'voting_app/home.html')
 
 
-# -------------------
+
 # REGISTER VIEW (Only pre-registered voters can vote)
-# -------------------
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -74,9 +71,9 @@ def register(request):
     return render(request, 'voting_app/register.html', {'form': form})
 
 
-# -------------------
+
 # OTP VERIFICATION
-# -------------------
+
 def verify_otp(request):
     voter_email = request.session.get('voter_email')
     if not voter_email:
@@ -105,9 +102,9 @@ def verify_otp(request):
     return render(request, 'voting_app/verify_otp.html', {'form': form, 'voter': voter})
 
 
-# -------------------
+
 # SHOW CANDIDATE LIST
-# -------------------
+
 def vote_list(request):
     voter_email = request.session.get('voter_email')
 
@@ -126,9 +123,9 @@ def vote_list(request):
     return render(request, 'voting_app/vote_list.html', {'candidates': candidates, 'voter': voter})
 
 
-# -------------------
+
 # VOTE FOR A CANDIDATE
-# -------------------
+
 def vote_candidate(request, candidate_id):
     voter_email = request.session.get('voter_email')
 
@@ -159,9 +156,9 @@ def vote_candidate(request, candidate_id):
     return redirect('voting_app:results')
 
 
-# -------------------
+
 # RESULTS PAGE
-# -------------------
+
 def results(request):
     candidates = Candidate.objects.all().order_by('-votes')
     total_votes = sum(c.votes for c in candidates)
@@ -177,9 +174,9 @@ def results(request):
     })
 
 
-# -------------------
+
 # LOGOUT
-# -------------------
+
 def user_logout(request):
     request.session.flush()
     messages.info(request, 'Session cleared.')
